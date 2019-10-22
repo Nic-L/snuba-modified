@@ -11,11 +11,15 @@ dataset='imdb'
 
 from data.loader import DataLoader
 dl = DataLoader()
-train_primitive_matrix, val_primitive_matrix, test_primitive_matrix, \
-train_ground, val_ground, test_ground, _, _, _ = dl.load_data(dataset=dataset)
 
 train_primitive_matrix, val_primitive_matrix, test_primitive_matrix, \
-train_ground, val_ground, test_ground = dl.load_data_synt()
+train_ground, val_ground, test_ground = dl.load_data_sheet()
+
+#train_primitive_matrix, val_primitive_matrix, test_primitive_matrix, \
+#train_ground, val_ground, test_ground, _, _, _ = dl.load_data(dataset=dataset)
+
+#train_primitive_matrix, val_primitive_matrix, test_primitive_matrix, \
+#train_ground, val_ground, test_ground = dl.load_data_synt()
 
 from program_synthesis.heuristic_generator import HeuristicGenerator
 
@@ -84,10 +88,10 @@ for i in range(3, 26):
     # Plot Training Set Label Distribution
     if i <= 8:
         plt.subplot(2, 3, i - 2)
-        plt.hist(training_marginals[-1], bins=10, range=(0.0, 1.0));
+        plt.hist(training_marginals[-1], bins=10, range=(0.0, 5.0));
         plt.title('Iteration ' + str(i - 2));
-        plt.xlim([0.0, 1.0])
-        plt.ylim([0, 825])
+        plt.xlim([0.0, 5.0])
+        plt.ylim([0, 2000])
 
     # Find low confidence datapoints in the labeled set
     hg.find_feedback()

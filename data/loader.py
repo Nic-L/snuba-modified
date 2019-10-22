@@ -2,6 +2,7 @@ import numpy as np
 import scipy
 import json
 import sklearn.model_selection
+import pandas as pd
 from sklearn.datasets import make_multilabel_classification
 
 from scipy import sparse
@@ -65,6 +66,37 @@ def split_data(X, plots, y):
     return np.array(X_tr.todense()), np.array(X_te.todense()), np.array(X_test.todense()), \
         np.array(y_tr), np.array(y_te), np.array(y_test), plots_tr, plots_te, plots_test
 
+def convert_to_numeric_label(labels1, labels2, labels3):
+    labels_long = np.append(labels1, np.append(labels2, labels3))
+    labels1_con = np.zeros(np.shape(labels1))
+    labels2_con = np.zeros(np.shape(labels2))
+    labels3_con = np.zeros(np.shape(labels3))
+
+    labels_un = np.unique(labels_long)
+
+    for counter, label in enumerate(labels_un):
+       #counter + 1 um die 0 für abstain frei zu halten
+       labels1_con[labels1 == label] = counter + 1
+       labels2_con[labels2 == label] = counter + 1
+       labels3_con[labels3 == label] = counter + 1
+
+    return labels1_con.astype(np.int32), labels2_con.astype(np.int32), labels3_con.astype(np.int32)
+
+def load_csv(path):
+    skip_list = ["label", "file_name", "corpus", "sheet_name", "sheet_index", "table_name", "cell_address",
+                 "first_row_num", "first_col_num"
+        , "last_row_num", "last_col_num"]
+
+    df = pd.read_csv(path, usecols=lambda column: column not in skip_list)
+    ground_df = pd.read_csv("./data/sheets/6_train.csv", usecols=lambda column: column in ["label"])
+
+    primitives = df.to_numpy()
+    ground = ground_df.to_numpy()
+
+    primitives = np.transpose(primitives)
+    ground = np.transpose(ground)
+
+    return primitives, ground
 
 class DataLoader(object):
     """ A class to load in appropriate numpy arrays
@@ -106,9 +138,9 @@ class DataLoader(object):
 
     def load_data_synt(self):
 
-        featureset, labelset = sklearn.datasets.make_multilabel_classification(n_samples=4000, n_features=400,
+        featureset, labelset = sklearn.datasets.make_multilabel_classification(n_samples=4000, n_features=10,
                                                                                n_classes=2, n_labels=1)
-        featureset[featureset >= 1] = 1.
+        #featureset[featureset >= 1] = 1.
         true_labels = []
 
         for row in labelset:
@@ -137,3 +169,22 @@ class DataLoader(object):
         common_idx = self.prune_features(np.array(X_te), np.array(X_tr))
         return np.array(X_tr)[:,common_idx], np.array(X_te)[:,common_idx], X_test[:,common_idx], \
             np.array(y_tr), np.array(y_te), np.array(y_test)
+
+    def load_data_sheet(self):
+        skip_list = ["label", "file_name", "corpus", "sheet_name", "sheet_index", "table_name", "cell_address", "first_row_num", "first_col_num"
+                     , "last_row_num", "last_col_num"]
+
+        train_df = pd.read_csv("./data/sheets/6_train.csv", usecols = lambda column: column not in skip_list)
+
+        train_primitives, train_ground = load_csv("./data/sheets/6_train.csv")
+        val_primitives, val_ground = load_csv("./data/sheets/6_val.csv")
+        test_primitives, test_ground = load_csv("./data/sheets/6_test.csv")
+
+        train_ground, val_ground, test_ground = convert_to_numeric_label(train_ground, val_ground, test_ground)
+
+        return train_primitives, val_primitives, test_primitives, \
+               train_ground, val_ground, test_ground
+
+
+
+

@@ -1,5 +1,7 @@
 import numpy as np
 from scipy import sparse
+from scipy.special import softmax
+
 
 def log_odds(p):
   """This is the logit function"""
@@ -71,6 +73,21 @@ class LabelAggregator(object):
     def __init__(self, bias_term=False):
         self.w         = None
         self.bias_term = bias_term
+        self.w_arr     = None
+
+    def train_multi(self, X, rate, mu, verbose, class_count):
+
+        N, M = X.shape
+        self.w_arr = np.zeros((class_count, M))
+        x_value = 1
+        while x_value <= class_count :
+            X_single = np.zeros(np.shape(X))
+            X_single[X != 0] = -1
+            X_single[X==x_value] = 1
+            if np.count_nonzero(X_single) != 0:
+                self.train(X_single, rate=1e-3, mu=1e-6, verbose=True)
+                self.w_arr[x_value - 1] = self.w
+            x_value += 1
 
     def train(self, X, n_iter=1000, w0=None, rate=0.01, alpha=0.5, mu=1e-6, \
             sample=False, n_samples=100, evidence=None, warm_starts=False, tol=1e-6, verbose=True):
@@ -118,6 +135,7 @@ class LabelAggregator(object):
             # Get the "empirical log odds"; NB: this assumes one is correct, clamp is for sampling...
             l = np.clip(log_odds(p_correct), -10, 10)
 
+            test = np.sum(n_pred)
             # SGD step with normalization by the number of samples
             g0 = (n_pred*(w - l)) / np.sum(n_pred)
 
@@ -159,7 +177,11 @@ class LabelAggregator(object):
 
     def marginals(self, X):
         X = X.todense()
-        marginals = odds_to_prob(X.dot(self.w))
+        w_arr_max = softmax(self.w_arr, axis=0)
+
+
+        marginals = odds_to_prob(X.dot(w_arr_max))
+        #marginals = odds_to_prob(X.dot(self.w))
         return np.array(marginals)[0]
 
 

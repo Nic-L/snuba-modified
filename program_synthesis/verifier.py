@@ -40,7 +40,8 @@ class Verifier(object):
             gen_model.train(self.L_train, epochs=100, decay=0.001 ** (1.0 / 100), step_size=0.005, reg_param=1.0)
         else:
             gen_model = LabelAggregator()
-            gen_model.train(self.L_train, rate=1e-3, mu=1e-6, verbose=True)
+            gen_model.train_multi(self.L_train, rate =1e-3, mu=1e-6, verbose=True, class_count= 4)
+            #gen_model.train(self.L_train, rate=1e-3, mu=1e-6, verbose=True)
         self.gen_model = gen_model
 
     def assign_marginals(self):
