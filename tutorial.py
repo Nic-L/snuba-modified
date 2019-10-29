@@ -12,14 +12,14 @@ dataset='imdb'
 from data.loader import DataLoader
 dl = DataLoader()
 
-train_primitive_matrix, val_primitive_matrix, test_primitive_matrix, \
-train_ground, val_ground, test_ground = dl.load_data_sheet()
+#train_primitive_matrix, val_primitive_matrix, test_primitive_matrix, \
+#train_ground, val_ground, test_ground = dl.load_data_sheet()
 
 #train_primitive_matrix, val_primitive_matrix, test_primitive_matrix, \
 #train_ground, val_ground, test_ground, _, _, _ = dl.load_data(dataset=dataset)
 
-#train_primitive_matrix, val_primitive_matrix, test_primitive_matrix, \
-#train_ground, val_ground, test_ground = dl.load_data_synt()
+train_primitive_matrix, val_primitive_matrix, test_primitive_matrix, \
+train_ground, val_ground, test_ground = dl.load_data_synt()
 
 from program_synthesis.heuristic_generator import HeuristicGenerator
 

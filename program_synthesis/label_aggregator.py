@@ -182,6 +182,7 @@ class LabelAggregator(object):
         x_value = 1
         while x_value <= class_count:
             X_single = np.zeros(np.shape(X))
+            X_single[X!=0] = -1
             X_single[X==x_value] = 1
             self.w = self.w_arr[x_value - 1, :]
             odds_np = np.asarray(X_single.dot(self.w))
