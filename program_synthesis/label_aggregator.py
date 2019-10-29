@@ -82,11 +82,10 @@ class LabelAggregator(object):
         x_value = 1
         while x_value <= class_count :
             X_single = np.zeros(np.shape(X))
-            X_single[X != 0] = -1
+            X_single[X != x_value] = -1
             X_single[X==x_value] = 1
-            if np.count_nonzero(X_single) != 0:
-                self.train(X_single, rate=1e-3, mu=1e-6, verbose=True)
-                self.w_arr[x_value - 1] = self.w
+            self.train(X_single, rate=rate, mu=mu, verbose=verbose)
+            self.w_arr[x_value - 1] = self.w
             x_value += 1
 
     def train(self, X, n_iter=1000, w0=None, rate=0.01, alpha=0.5, mu=1e-6, \
@@ -175,13 +174,31 @@ class LabelAggregator(object):
         # Return learned weights
         self.w = w
 
+    def marginals_multi(self, X, class_count):
+        N, M = X.shape
+        all_marginals = np.zeros((N, class_count))
+        X = X.todense()
+
+        x_value = 1
+        while x_value <= class_count:
+            X_single = np.zeros(np.shape(X))
+            X_single[X==x_value] = 1
+            self.w = self.w_arr[x_value - 1, :]
+            odds_np = np.asarray(X_single.dot(self.w))
+            marginals = odds_to_prob(X_single.dot(self.w))
+            all_marginals[:, x_value - 1] = marginals
+            x_value += 1
+
+        marginals_normal = softmax(all_marginals, axis=1)
+        marginals_max = np.amax(marginals_normal, axis = 1)
+        return marginals_max
+
+
     def marginals(self, X):
         X = X.todense()
-        w_arr_max = softmax(self.w_arr, axis=0)
 
-
-        marginals = odds_to_prob(X.dot(w_arr_max))
-        #marginals = odds_to_prob(X.dot(self.w))
+        #marginals = odds_to_prob(X.dot(np.transpose(self.w_arr)))
+        marginals = odds_to_prob(X.dot(self.w))
         return np.array(marginals)[0]
 
 

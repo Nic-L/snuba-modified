@@ -43,15 +43,15 @@ print('Features chosen heuristics are based on: ', top_idx)
 from program_synthesis.verifier import Verifier
 verifier = Verifier(hg.L_train, hg.L_val, val_ground, has_snorkel=False)
 
-verifier.train_gen_model()
-verifier.assign_marginals()
+verifier.train_gen_model(class_count = 4)
+verifier.assign_marginals(class_count = 4)
 
 #plt.hist(verifier.train_marginals); plt.title('Training Set Probabilistic Labels');
 #plt.show()
 
 #plt.hist(verifier.val_marginals); plt.title('Validation Set Probabilistic Labels');
 #plt.show();
-feedback_idx = verifier.find_vague_points(gamma=0.1,b=0.25)
+feedback_idx = verifier.find_vague_points(gamma=0.05,b=0.25)
 print('Percentage of Low Confidence Points: ', np.shape(feedback_idx)[0]/float(np.shape(val_ground)[0]))
 
 validation_accuracy = []

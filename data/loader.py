@@ -80,7 +80,7 @@ def convert_to_numeric_label(labels1, labels2, labels3):
        labels2_con[labels2 == label] = counter + 1
        labels3_con[labels3 == label] = counter + 1
 
-    return labels1_con.astype(np.int32), labels2_con.astype(np.int32), labels3_con.astype(np.int32)
+    return np.transpose(labels1_con.astype(np.int32)), np.transpose(labels2_con.astype(np.int32)), np.transpose(labels3_con.astype(np.int32))
 
 def load_csv(path):
     skip_list = ["label", "file_name", "corpus", "sheet_name", "sheet_index", "table_name", "cell_address",
@@ -88,7 +88,7 @@ def load_csv(path):
         , "last_row_num", "last_col_num"]
 
     df = pd.read_csv(path, usecols=lambda column: column not in skip_list)
-    ground_df = pd.read_csv("./data/sheets/6_train.csv", usecols=lambda column: column in ["label"])
+    ground_df = pd.read_csv(path, usecols=lambda column: column in ["label"])
 
     primitives = df.to_numpy()
     ground = ground_df.to_numpy()
@@ -138,7 +138,7 @@ class DataLoader(object):
 
     def load_data_synt(self):
 
-        featureset, labelset = sklearn.datasets.make_multilabel_classification(n_samples=4000, n_features=10,
+        featureset, labelset = sklearn.datasets.make_multilabel_classification(n_samples=4000, n_features=30,
                                                                                n_classes=2, n_labels=1)
         #featureset[featureset >= 1] = 1.
         true_labels = []
@@ -171,10 +171,6 @@ class DataLoader(object):
             np.array(y_tr), np.array(y_te), np.array(y_test)
 
     def load_data_sheet(self):
-        skip_list = ["label", "file_name", "corpus", "sheet_name", "sheet_index", "table_name", "cell_address", "first_row_num", "first_col_num"
-                     , "last_row_num", "last_col_num"]
-
-        train_df = pd.read_csv("./data/sheets/6_train.csv", usecols = lambda column: column not in skip_list)
 
         train_primitives, train_ground = load_csv("./data/sheets/6_train.csv")
         val_primitives, val_ground = load_csv("./data/sheets/6_val.csv")
@@ -182,7 +178,7 @@ class DataLoader(object):
 
         train_ground, val_ground, test_ground = convert_to_numeric_label(train_ground, val_ground, test_ground)
 
-        return train_primitives, val_primitives, test_primitives, \
+        return np.transpose(train_primitives), np.transpose(val_primitives), np.transpose(test_primitives), \
                train_ground, val_ground, test_ground
 
 
