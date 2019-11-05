@@ -51,7 +51,7 @@ verifier.assign_marginals(class_count = 4)
 
 #plt.hist(verifier.val_marginals); plt.title('Validation Set Probabilistic Labels');
 #plt.show();
-feedback_idx = verifier.find_vague_points(gamma=0.05,b=0.25)
+feedback_idx = verifier.find_vague_points(gamma=0.1,b=0.25)
 print('Percentage of Low Confidence Points: ', np.shape(feedback_idx)[0]/float(np.shape(val_ground)[0]))
 
 validation_accuracy = []
@@ -64,8 +64,8 @@ idx = None
 
 hg = HeuristicGenerator(train_primitive_matrix, val_primitive_matrix,
                         val_ground, train_ground,
-                        b=0.25)
-plt.figure(figsize=(12, 6));
+                        b=0.5)
+#plt.figure(figsize=(12, 6));
 for i in range(3, 26):
     if (i - 2) % 5 == 0:
         print(

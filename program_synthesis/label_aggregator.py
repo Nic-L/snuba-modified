@@ -185,14 +185,18 @@ class LabelAggregator(object):
             X_single[X!=0] = -1
             X_single[X==x_value] = 1
             self.w = self.w_arr[x_value - 1, :]
-            odds_np = np.asarray(X_single.dot(self.w))
+            #odds_np = np.asarray(X_single.dot(self.w))
             marginals = odds_to_prob(X_single.dot(self.w))
             all_marginals[:, x_value - 1] = marginals
             x_value += 1
 
-        marginals_normal = softmax(all_marginals, axis=1)
+        #marginals_normal = softmax(all_marginals, axis=1)
+        marginals_sum = np.sum(all_marginals, axis = 1)
+        marginals_normal = all_marginals / marginals_sum[:, None]
         marginals_max = np.amax(marginals_normal, axis = 1)
-        return marginals_max
+        label_max = np.argmax(marginals_normal, axis = 1) + 1
+        label_max[marginals_max == 0.25] = 0
+        return marginals_max, label_max
 
 
     def marginals(self, X):

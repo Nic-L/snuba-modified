@@ -138,10 +138,15 @@ class DataLoader(object):
 
     def load_data_synt(self):
 
-        featureset, labelset = sklearn.datasets.make_multilabel_classification(n_samples=4000, n_features=30,
-                                                                               n_classes=2, n_labels=1)
+        #featureset, labelset = sklearn.datasets.make_multilabel_classification(n_samples=4000, n_features=30,
+                                                                              # n_classes=2, n_labels=1)
+
+        featureset, labelset = sklearn.datasets.make_classification(n_samples = 4000, n_features = 10, n_classes = 4, n_informative=5)
+
+        labelset = labelset + 1
+
         #featureset[featureset >= 1] = 1.
-        true_labels = []
+        '''true_labels = []
 
         for row in labelset:
             if (row[0] == 1) and (row[1] == 1):
@@ -153,13 +158,13 @@ class DataLoader(object):
             if (row[0] == 0) and (row[1] == 0):
                 true_labels.append(4)
 
-        true_labels = np.array(true_labels)
+        true_labels = np.array(true_labels)'''
 
         X_train = featureset[500:, :]
         X_test= featureset[0:500, :]
 
-        y_train = true_labels[500:]
-        y_test = true_labels[0:500]
+        y_train = labelset[500:]
+        y_test = labelset[0:500]
 
         test_ratio = 0.2
         X_tr, X_te, y_tr, y_te = \

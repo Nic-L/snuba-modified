@@ -49,7 +49,7 @@ class HeuristicGenerator(object):
             labels_cutoff = np.zeros(np.shape(marginals))
             it = np.nditer(marginals, flags=['f_index'])
             while not it.finished:
-                    if it[0] >= (self.b + beta):
+                    if it.value >= (self.b + beta):
                         labels_cutoff[it.index] = idx[it.index] + 1
                     it.iternext()
                     #labels_cutoff[i] = switch_index.get(idx[i], 0)
@@ -181,7 +181,7 @@ class HeuristicGenerator(object):
         marginals: confidences for data from a single heuristic
         """
         m = len(self.hf)
-        gamma = 0.5-(1/(m**(3/2.))) 
+        gamma = 0.5-(1/(m**(3/2.)))
         return gamma
 
     def find_feedback(self):
@@ -197,7 +197,8 @@ class HeuristicGenerator(object):
         #gamma_opt = self.gamma
         vague_idx = self.vf.find_vague_points(b=self.b, gamma=gamma_opt)
         incorrect_idx = vague_idx
-        self.feedback_idx = list(set(list(np.concatenate((vague_idx,incorrect_idx)))))   
+        self.feedback_idx = list(set(list(np.concatenate((vague_idx,incorrect_idx)))))
+        test = 1
 
 
     def evaluate(self):
@@ -206,22 +207,24 @@ class HeuristicGenerator(object):
         """
         self.val_marginals = self.vf.val_marginals
         self.train_marginals = self.vf.train_marginals
+        self.val_labels = self.vf.val_labels
+        self.train_labels = self.vf.train_labels
 
-        def calculate_accuracy(marginals, b, ground):
-            total = np.shape(np.where(marginals != 0.5))[1]
-            labels = np.sign(2*(marginals - 0.5))
-            return np.sum(labels == ground)/float(total)
+        def calculate_accuracy(p_labels, marginals, b, ground):
+            total = np.shape(np.where(p_labels != 0))[1]
+            #labels = np.sign(2*(marginals - 0.5))
+            return np.sum(p_labels == ground)/float(total)
     
-        def calculate_coverage(marginals, b, ground):
-            total = np.shape(np.where(marginals != 0.5))[1]
-            labels = np.sign(2*(marginals - 0.5))
-            return total/float(len(labels))
+        def calculate_coverage(p_labels, marginals, b, ground):
+            total = np.shape(np.where(p_labels != 0))[1]
+            #labels = np.sign(2*(marginals - 0.5))
+            return total/float(len(p_labels))
 
         
-        self.val_accuracy = calculate_accuracy(self.val_marginals, self.b, self.val_ground)
-        self.train_accuracy = calculate_accuracy(self.train_marginals, self.b, self.train_ground)
-        self.val_coverage = calculate_coverage(self.val_marginals, self.b, self.val_ground)
-        self.train_coverage = calculate_coverage(self.train_marginals, self.b, self.train_ground)
+        self.val_accuracy = calculate_accuracy(self.val_labels, self.val_marginals, self.b, self.val_ground)
+        self.train_accuracy = calculate_accuracy(self.train_labels, self.train_marginals, self.b, self.train_ground)
+        self.val_coverage = calculate_coverage(self.val_labels, self.val_marginals, self.b, self.val_ground)
+        self.train_coverage = calculate_coverage(self.train_labels, self.train_marginals, self.b, self.train_ground)
         return self.val_accuracy, self.train_accuracy, self.val_coverage, self.train_coverage 
 
     def heuristic_stats(self):

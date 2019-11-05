@@ -96,7 +96,7 @@ class Synthesizer(object):
 
         #Set the range of beta params
         #0.25 instead of 0.0 as a min makes controls coverage better
-        beta_params = np.linspace(0.25,0.95,10)
+        beta_params = np.linspace(0.0,0.75,10)
 
         f1 = []		
  		
@@ -131,7 +131,8 @@ class Synthesizer(object):
             #marginals = hf.predict_proba(X[:,feat_combos[i]])[:,1]
             all_marginals = hf.predict_proba(X[:,feat_combos[i]])
             marginals = np.amax(all_marginals, axis=1)
-            idx = np.unravel_index(np.argmax(all_marginals, axis=1), all_marginals.shape)[1]
+            #idx = np.unravel_index(np.argmax(all_marginals, axis=1), all_marginals.shape)[1]
+            idx = np.argmax(all_marginals, axis = 1)
             #labels_cutoff = np.zeros(np.shape(marginals))
             beta_opt.append((self.beta_optimizer(marginals, idx, ground)))
         return beta_opt

@@ -48,8 +48,8 @@ class Verifier(object):
         """ 
         Assigns probabilistic labels for train and val sets 
         """ 
-        self.train_marginals = self.gen_model.marginals_multi(sparse.csr_matrix(self.L_train), class_count = class_count)
-        self.val_marginals = self.gen_model.marginals_multi(sparse.csr_matrix(self.L_val), class_count = class_count)
+        self.train_marginals, self.train_labels = self.gen_model.marginals_multi(sparse.csr_matrix(self.L_train), class_count = class_count)
+        self.val_marginals, self.val_labels = self.gen_model.marginals_multi(sparse.csr_matrix(self.L_val), class_count = class_count)
         #print 'Learned Accuracies: ', odds_to_prob(self.gen_model.w)
 
     def find_vague_points(self,gamma=0.1,b=0.5):
