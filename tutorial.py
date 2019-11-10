@@ -29,7 +29,7 @@ hg.run_synthesizer(max_cardinality=1, idx=None, keep=3, model='lr')
 from program_synthesis.synthesizer import Synthesizer
 syn = Synthesizer(val_primitive_matrix, val_ground, b=0.25)
 
-heuristics, feature_inputs = syn.generate_heuristics('lr', 1)
+heuristics, feature_inputs = syn.generate_heuristics('dt', 1)
 print("Total Heuristics Generated: ", np.shape(heuristics)[1])
 
 optimal_betas = syn.find_optimal_beta(heuristics[0], val_primitive_matrix, feature_inputs[0], val_ground)

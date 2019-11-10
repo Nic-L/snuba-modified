@@ -2,6 +2,8 @@ import numpy as np
 import itertools
 
 from sklearn.metrics import f1_score
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
@@ -56,7 +58,7 @@ class Synthesizer(object):
 
         elif model == 'lr':
             lr = LogisticRegression(solver = 'lbfgs', multi_class = 'multinomial')
-            lr.fit(X,self.val_ground)
+            lr.fit(X,self.val_ground - 1)
             return lr
 
         elif model == 'nn':
@@ -96,7 +98,7 @@ class Synthesizer(object):
 
         #Set the range of beta params
         #0.25 instead of 0.0 as a min makes controls coverage better
-        beta_params = np.linspace(0.0,0.75,10)
+        beta_params = np.linspace(0.0,0.75,15)
 
         f1 = []		
  		
@@ -105,12 +107,24 @@ class Synthesizer(object):
             #labels_cutoff[marginals <= (self.b-beta)] = -1.
             #labels_cutoff[marginals >= (self.b+beta)] = 1.
             labels_cutoff = np.zeros(np.shape(marginals))
-            it = np.nditer(marginals, flags=['f_index'])
+            '''it = np.nditer(marginals, flags=['f_index'])
             while not it.finished:
                 if it[0] >= (self.b + beta):
                     labels_cutoff[it.index] = idx[it.index] + 1
-                it.iternext()
-            f1.append(f1_score(ground, labels_cutoff, average='weighted'))
+                it.iternext()'''
+            for m_index, marginal in enumerate(marginals):
+                if marginal >= (self.b + beta):
+                    labels_cutoff[m_index] = idx[m_index] + 1
+            ground_filtered = ground[labels_cutoff != 0]
+            labels_filtered = labels_cutoff[labels_cutoff != 0]
+
+            prec_score = precision_score(ground, labels_cutoff, average = 'weighted')
+            rec_score = recall_score(ground_filtered, labels_filtered, average = 'weighted')
+
+            this_f1 = (2 * prec_score * rec_score) / (prec_score + rec_score)
+
+            #f1.append(f1_score(ground_filtered, labels_filtered, average='weighted'))
+            f1.append(this_f1)
          		
         f1 = np.nan_to_num(f1)
         return beta_params[np.argsort(np.array(f1))[-1]]

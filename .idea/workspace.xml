@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5d2921bb-dd2c-498a-b58c-ad510430880a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/imdb_reef.npy" afterPath="$PROJECT_DIR$/data/imdb_reef.npy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/loader.py" afterPath="$PROJECT_DIR$/data/loader.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/program_synthesis/heuristic_generator.py" afterPath="$PROJECT_DIR$/program_synthesis/heuristic_generator.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/program_synthesis/label_aggregator.py" afterPath="$PROJECT_DIR$/program_synthesis/label_aggregator.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/program_synthesis/synthesizer.py" afterPath="$PROJECT_DIR$/program_synthesis/synthesizer.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/program_synthesis/verifier.py" afterPath="$PROJECT_DIR$/program_synthesis/verifier.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tutorial.py" afterPath="$PROJECT_DIR$/tutorial.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,8 +20,8 @@
       <file leaf-file-name="tutorial.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tutorial.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-534">
-              <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+            <state relative-caret-position="374">
+              <caret line="26" column="36" lean-forward="false" selection-start-line="26" selection-start-column="36" selection-end-line="26" selection-end-column="36" />
               <folding>
                 <element signature="e#2#20#0" expanded="true" />
               </folding>
@@ -33,11 +29,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="heuristic_generator.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="heuristic_generator.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/program_synthesis/heuristic_generator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="924">
-              <caret line="208" column="40" lean-forward="false" selection-start-line="208" selection-start-column="39" selection-end-line="208" selection-end-column="40" />
+            <state relative-caret-position="2584">
+              <caret line="157" column="0" lean-forward="false" selection-start-line="157" selection-start-column="0" selection-end-line="157" selection-end-column="0" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -48,8 +44,8 @@
       <file leaf-file-name="loader.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data/loader.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="143" column="100" lean-forward="false" selection-start-line="143" selection-start-column="100" selection-end-line="143" selection-end-column="100" />
+            <state relative-caret-position="2295">
+              <caret line="143" column="132" lean-forward="false" selection-start-line="143" selection-start-column="132" selection-end-line="143" selection-end-column="132" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -60,7 +56,7 @@
       <file leaf-file-name="verifier.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/program_synthesis/verifier.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="516">
+            <state relative-caret-position="680">
               <caret line="42" column="33" lean-forward="false" selection-start-line="42" selection-start-column="22" selection-end-line="42" selection-end-column="33" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
@@ -69,11 +65,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="synthesizer.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="synthesizer.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/program_synthesis/synthesizer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="881">
-              <caret line="98" column="41" lean-forward="false" selection-start-line="98" selection-start-column="41" selection-end-line="98" selection-end-column="41" />
+            <state relative-caret-position="459">
+              <caret line="129" column="0" lean-forward="false" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -84,7 +80,7 @@
       <file leaf-file-name="label_aggregator.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/program_synthesis/label_aggregator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1812">
+            <state relative-caret-position="2958">
               <caret line="176" column="8" lean-forward="false" selection-start-line="176" selection-start-column="8" selection-end-line="176" selection-end-column="8" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
@@ -108,9 +104,9 @@
       <list>
         <option value="$PROJECT_DIR$/program_synthesis/verifier.py" />
         <option value="$PROJECT_DIR$/program_synthesis/label_aggregator.py" />
-        <option value="$PROJECT_DIR$/tutorial.py" />
-        <option value="$PROJECT_DIR$/data/loader.py" />
         <option value="$PROJECT_DIR$/program_synthesis/heuristic_generator.py" />
+        <option value="$PROJECT_DIR$/data/loader.py" />
+        <option value="$PROJECT_DIR$/tutorial.py" />
         <option value="$PROJECT_DIR$/program_synthesis/synthesizer.py" />
       </list>
     </option>
@@ -136,6 +132,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -224,7 +221,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -349,7 +345,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1096" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -360,7 +356,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3995943" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3995943" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -384,18 +380,14 @@
           <option name="timeStamp" value="114" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/program_synthesis/heuristic_generator.py</url>
-          <line>165</line>
-          <option name="timeStamp" value="128" />
+          <url>file://$PROJECT_DIR$/program_synthesis/synthesizer.py</url>
+          <line>129</line>
+          <option name="timeStamp" value="146" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="129" />
+      <option name="time" value="147" />
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="PythonConfigurationType">
-        <watch expression="self.val_marginals" />
-      </configuration>
-    </watches-manager>
+    <watches-manager />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/sklearn/utils/validation.py">
@@ -816,47 +808,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="349">
           <caret line="1577" column="0" lean-forward="false" selection-start-line="1577" selection-start-column="0" selection-end-line="1577" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/sklearn/metrics/classification.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="444">
-          <caret line="949" column="4" lean-forward="false" selection-start-line="949" selection-start-column="4" selection-end-line="949" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/sklearn/datasets/samples_generator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="162" column="0" lean-forward="false" selection-start-line="162" selection-start-column="0" selection-end-line="162" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/loader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="143" column="100" lean-forward="false" selection-start-line="143" selection-start-column="100" selection-end-line="143" selection-end-column="100" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/program_synthesis/synthesizer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="881">
-          <caret line="98" column="41" lean-forward="false" selection-start-line="98" selection-start-column="41" selection-end-line="98" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/program_synthesis/label_aggregator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1812">
+        <state relative-caret-position="2958">
           <caret line="176" column="8" lean-forward="false" selection-start-line="176" selection-start-column="8" selection-end-line="176" selection-end-column="8" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
@@ -866,8 +823,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/program_synthesis/verifier.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="516">
+        <state relative-caret-position="680">
           <caret line="42" column="33" lean-forward="false" selection-start-line="42" selection-start-column="22" selection-end-line="42" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/sklearn/datasets/samples_generator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2567">
+          <caret line="162" column="0" lean-forward="false" selection-start-line="162" selection-start-column="0" selection-end-line="162" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/loader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2295">
+          <caret line="143" column="132" lean-forward="false" selection-start-line="143" selection-start-column="132" selection-end-line="143" selection-end-column="132" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/program_synthesis/heuristic_generator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2584">
+          <caret line="157" column="0" lean-forward="false" selection-start-line="157" selection-start-column="0" selection-end-line="157" selection-end-column="0" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -876,18 +860,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tutorial.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-534">
-          <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+        <state relative-caret-position="374">
+          <caret line="26" column="36" lean-forward="false" selection-start-line="26" selection-start-column="36" selection-end-line="26" selection-end-column="36" />
           <folding>
             <element signature="e#2#20#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/program_synthesis/heuristic_generator.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/sklearn/metrics/classification.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="924">
-          <caret line="208" column="40" lean-forward="false" selection-start-line="208" selection-start-column="39" selection-end-line="208" selection-end-column="40" />
+        <state relative-caret-position="189">
+          <caret line="1253" column="0" lean-forward="false" selection-start-line="1253" selection-start-column="0" selection-end-line="1253" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/program_synthesis/synthesizer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="129" column="0" lean-forward="false" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
