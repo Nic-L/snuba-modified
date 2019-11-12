@@ -141,7 +141,7 @@ class DataLoader(object):
         #featureset, labelset = sklearn.datasets.make_multilabel_classification(n_samples=4000, n_features=30,
                                                                               # n_classes=2, n_labels=1)
 
-        featureset, labelset = sklearn.datasets.make_classification(n_samples = 4000, n_features = 3, n_classes = 4, n_informative=3, n_redundant=0, n_repeated=0)
+        featureset, labelset = sklearn.datasets.make_classification(n_samples = 4000, n_features = 10, n_classes = 4, n_informative=10, n_redundant=0, n_repeated=0)
 
         labelset = labelset + 1
 

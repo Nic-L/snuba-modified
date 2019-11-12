@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 from sklearn.metrics import f1_score
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
 
 from program_synthesis.synthesizer import Synthesizer
 from program_synthesis.verifier import Verifier
@@ -45,7 +47,7 @@ class HeuristicGenerator(object):
             all_marginals = hf.predict_proba(X)
             prediction = hf.predict(X)
             marginals = np.amax(all_marginals, axis=1)
-            idx = np.unravel_index(np.argmax(all_marginals, axis=1), all_marginals.shape)[1]
+            idx = np.argmax(all_marginals, axis=1)
             labels_cutoff = np.zeros(np.shape(marginals))
             it = np.nditer(marginals, flags=['f_index'])
             while not it.finished:
@@ -104,13 +106,31 @@ class HeuristicGenerator(object):
                 L_train = np.concatenate((L_train, L_temp_train), axis=1)
         
         #Use F1 trade-off for reliability
-        acc_cov_scores = [f1_score(self.val_ground, L_val[:,i], average='micro') for i in range(np.shape(L_val)[1])] 
+        acc_cov_scores = np.zeros(np.shape(L_val)[1])
+
+        for i in range(np.shape(L_val)[1]):
+            val_ground_filtered = self.val_ground[L_val[:, i] != 0]
+            L_val_filtered = L_val[:, i]
+            L_val_filtered = L_val_filtered[L_val_filtered != 0]
+
+            prec_score = precision_score(self.val_ground, L_val[:, i], average='micro')
+            rec_score = recall_score(val_ground_filtered, L_val_filtered, average='micro')
+
+            this_f1 = (2 * prec_score * rec_score) / (prec_score + rec_score)
+            #acc_cov_scores[i] = f1_score(val_ground_filtered, L_val_filtered, average='micro')
+            acc_cov_scores[i] = this_f1
+
+        #acc_cov_scores = [f1_score(self.val_ground, L_val[:,i], average='micro') for i in range(np.shape(L_val)[1])]
         acc_cov_scores = np.nan_to_num(acc_cov_scores)
-        
+
         if self.vf != None:
             #Calculate Jaccard score for diversity
-            train_num_labeled = np.sum(np.abs(self.vf.L_train.T), axis=0) 
-            jaccard_scores = calculate_jaccard_distance(train_num_labeled,np.abs(L_train))
+            Jaccard_dummy_vf = self.vf.L_train.T
+            Jaccard_dummy_vf[Jaccard_dummy != 0] = 1
+            Jaccard_dummy_train = L_train
+            Jaccard_dummy_train[Jaccard_dummy_train != 0] = 1
+            train_num_labeled = np.sum(np.abs(Jaccard_dummy_vf), axis=0)
+            jaccard_scores = calculate_jaccard_distance(train_num_labeled,np.abs(Jaccard_dummy_train))
         else:
             jaccard_scores = np.ones(np.shape(acc_cov_scores))
 

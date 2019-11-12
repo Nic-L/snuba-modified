@@ -100,7 +100,10 @@ class Synthesizer(object):
         #0.25 instead of 0.0 as a min makes controls coverage better
         beta_params = np.linspace(0.0,0.75,15)
 
-        f1 = []		
+        f1 = []
+        recall = []
+        precision = []
+        labels = np.unique(ground)
  		
         for beta in beta_params:		
             #labels_cutoff = np.zeros(np.shape(marginals))
@@ -124,6 +127,8 @@ class Synthesizer(object):
             this_f1 = (2 * prec_score * rec_score) / (prec_score + rec_score)
 
             #f1.append(f1_score(ground_filtered, labels_filtered, average='weighted'))
+            precision.append(prec_score)
+            recall.append(rec_score)
             f1.append(this_f1)
          		
         f1 = np.nan_to_num(f1)
