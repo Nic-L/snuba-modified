@@ -13,21 +13,24 @@ from data.loader import DataLoader
 dl = DataLoader()
 
 #train_primitive_matrix, val_primitive_matrix, test_primitive_matrix, \
-#train_ground, val_ground, test_ground = dl.load_data_sheet()
-
-#train_primitive_matrix, val_primitive_matrix, test_primitive_matrix, \
-#train_ground, val_ground, test_ground, _, _, _ = dl.load_data(dataset=dataset)
+#train_ground, val_ground, test_ground, class_count = dl.load_data_sheet()
 
 train_primitive_matrix, val_primitive_matrix, test_primitive_matrix, \
-train_ground, val_ground, test_ground = dl.load_data_synt()
+train_ground, val_ground, test_ground, _, _, _ = dl.load_data(dataset=dataset)
+class_count = 2
+
+#train_primitive_matrix, val_primitive_matrix, test_primitive_matrix, \
+#rain_ground, val_ground, test_ground, class_count = dl.load_data_synt(4)
+
+b = 1/class_count
 
 from program_synthesis.heuristic_generator import HeuristicGenerator
 
-hg = HeuristicGenerator(train_primitive_matrix, val_primitive_matrix, val_ground, train_ground, b=0.25)
+'''hg = HeuristicGenerator(train_primitive_matrix, val_primitive_matrix, val_ground, train_ground, b=b, class_count = class_count)
 hg.run_synthesizer(max_cardinality=1, idx=None, keep=3, model='lr')
 
 from program_synthesis.synthesizer import Synthesizer
-syn = Synthesizer(val_primitive_matrix, val_ground, b=0.25)
+syn = Synthesizer(val_primitive_matrix, val_ground, b=b)
 
 heuristics, feature_inputs = syn.generate_heuristics('lr', 1)
 print("Total Heuristics Generated: ", np.shape(heuristics)[1])
@@ -43,16 +46,16 @@ print('Features chosen heuristics are based on: ', top_idx)
 from program_synthesis.verifier import Verifier
 verifier = Verifier(hg.L_train, hg.L_val, val_ground, has_snorkel=False)
 
-verifier.train_gen_model(class_count = 4)
-verifier.assign_marginals(class_count = 4)
+verifier.train_gen_model(class_count = class_count)
+verifier.assign_marginals(class_count = class_count)
 
 #plt.hist(verifier.train_marginals); plt.title('Training Set Probabilistic Labels');
 #plt.show()
 
 #plt.hist(verifier.val_marginals); plt.title('Validation Set Probabilistic Labels');
 #plt.show();
-feedback_idx = verifier.find_vague_points(gamma=0.1,b=0.25)
-print('Percentage of Low Confidence Points: ', np.shape(feedback_idx)[0]/float(np.shape(val_ground)[0]))
+feedback_idx = verifier.find_vague_points(gamma=0.1,b=b)
+print('Percentage of Low Confidence Points: ', np.shape(feedback_idx)[0]/float(np.shape(val_ground)[0]))'''
 
 validation_accuracy = []
 training_accuracy = []
@@ -64,7 +67,7 @@ idx = None
 
 hg = HeuristicGenerator(train_primitive_matrix, val_primitive_matrix,
                         val_ground, train_ground,
-                        b=0.5)
+                        b=b, class_count = class_count)
 #plt.figure(figsize=(12, 6));
 for i in range(3, 26):
     if (i - 2) % 5 == 0:

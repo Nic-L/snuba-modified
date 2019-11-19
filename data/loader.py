@@ -25,24 +25,17 @@ def parse_file(filename):
     for i,movie in enumerate(f):
         genre = movie['Genre']
         if 'Action' in genre and 'Romance' in genre:
-            #continue
+            continue
+        elif 'Action' in genre:
             plots = plots + [movie['Plot']]
             gt.append(1)
             idx.append(i)
-        elif 'Action' in genre:
-            plots = plots+[movie['Plot']]
+        elif 'Romance' in genre:
+            plots = plots + [movie['Plot']]
             gt.append(2)
             idx.append(i)
-        elif ('Romance' in genre) or ('Horror' in genre):
-            plots = plots+[movie['Plot']]
-            gt.append(3)
-            idx.append(i)
         else:
-            #continue
-            plots = plots + [movie['Plot']]
-            gt.append(4)
-            idx.append(i)
-    
+            continue
     return np.array(plots), np.array(gt)
 
 def split_data(X, plots, y):
@@ -73,6 +66,7 @@ def convert_to_numeric_label(labels1, labels2, labels3):
     labels3_con = np.zeros(np.shape(labels3))
 
     labels_un = np.unique(labels_long)
+    class_count = labels_un.size
 
     for counter, label in enumerate(labels_un):
        #counter + 1 um die 0 für abstain frei zu halten
@@ -80,7 +74,7 @@ def convert_to_numeric_label(labels1, labels2, labels3):
        labels2_con[labels2 == label] = counter + 1
        labels3_con[labels3 == label] = counter + 1
 
-    return np.transpose(labels1_con.astype(np.int32)), np.transpose(labels2_con.astype(np.int32)), np.transpose(labels3_con.astype(np.int32))
+    return np.transpose(labels1_con.astype(np.int32)), np.transpose(labels2_con.astype(np.int32)), np.transpose(labels3_con.astype(np.int32)), class_count
 
 def load_csv(path):
     skip_list = ["label", "file_name", "corpus", "sheet_name", "sheet_index", "table_name", "cell_address",
@@ -136,12 +130,12 @@ class DataLoader(object):
             np.array(train_ground), np.array(val_ground), np.array(test_ground), \
             train_plots, val_plots, test_plots
 
-    def load_data_synt(self):
+    def load_data_synt(self, class_count):
 
         #featureset, labelset = sklearn.datasets.make_multilabel_classification(n_samples=4000, n_features=30,
                                                                               # n_classes=2, n_labels=1)
 
-        featureset, labelset = sklearn.datasets.make_classification(n_samples = 4000, n_features = 10, n_classes = 4, n_informative=10, n_redundant=0, n_repeated=0)
+        featureset, labelset = sklearn.datasets.make_classification(n_samples = 4000, n_features = 40, n_classes = class_count, n_informative=20, n_redundant=20, n_repeated=0, random_state = 3)
 
         labelset = labelset + 1
 
@@ -168,12 +162,12 @@ class DataLoader(object):
 
         test_ratio = 0.2
         X_tr, X_te, y_tr, y_te = \
-            sklearn.model_selection.train_test_split(X_train, y_train, test_size=test_ratio)
+            sklearn.model_selection.train_test_split(X_train, y_train, test_size=test_ratio, random_state = 3)
 
         #Prune Feature Space
         common_idx = self.prune_features(np.array(X_te), np.array(X_tr))
         return np.array(X_tr)[:,common_idx], np.array(X_te)[:,common_idx], X_test[:,common_idx], \
-            np.array(y_tr), np.array(y_te), np.array(y_test)
+            np.array(y_tr), np.array(y_te), np.array(y_test), class_count
 
     def load_data_sheet(self):
 
@@ -181,10 +175,10 @@ class DataLoader(object):
         val_primitives, val_ground = load_csv("./data/sheets/6_val.csv")
         test_primitives, test_ground = load_csv("./data/sheets/6_test.csv")
 
-        train_ground, val_ground, test_ground = convert_to_numeric_label(train_ground, val_ground, test_ground)
+        train_ground, val_ground, test_ground, class_count = convert_to_numeric_label(train_ground, val_ground, test_ground)
 
         return np.transpose(train_primitives), np.transpose(val_primitives), np.transpose(test_primitives), \
-               train_ground, val_ground, test_ground
+               train_ground, val_ground, test_ground, class_count
 
 
 

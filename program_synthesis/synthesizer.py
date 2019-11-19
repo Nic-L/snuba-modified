@@ -98,9 +98,10 @@ class Synthesizer(object):
 
         #Set the range of beta params
         #0.25 instead of 0.0 as a min makes controls coverage better
-        beta_params = np.linspace(0.0,0.75,15)
+        beta_params = np.linspace(0.25,0.45,10)
 
         f1 = []
+        f1_man = []
         recall = []
         precision = []
         labels = np.unique(ground)
@@ -121,17 +122,22 @@ class Synthesizer(object):
             ground_filtered = ground[labels_cutoff != 0]
             labels_filtered = labels_cutoff[labels_cutoff != 0]
 
-            prec_score = precision_score(ground, labels_cutoff, average = 'weighted')
-            rec_score = recall_score(ground_filtered, labels_filtered, average = 'weighted')
+            prec_score = precision_score(ground_filtered, labels_filtered, average = 'micro')
+            rec_score = recall_score(ground, labels_cutoff, average = 'weighted')
 
             this_f1 = (2 * prec_score * rec_score) / (prec_score + rec_score)
 
-            #f1.append(f1_score(ground_filtered, labels_filtered, average='weighted'))
+            f1.append(f1_score(ground, labels_cutoff, average='weighted'))
             precision.append(prec_score)
             recall.append(rec_score)
-            f1.append(this_f1)
+            f1_man.append(this_f1)
          		
         f1 = np.nan_to_num(f1)
+        f1_man = np.nan_to_num(f1_man)
+        print("sklearn-metric:")
+        print(f1)
+        print("manual_metric:")
+        print(f1_man)
         return beta_params[np.argsort(np.array(f1))[-1]]
 
 
@@ -148,11 +154,14 @@ class Synthesizer(object):
         beta_opt = []
         for i,hf in enumerate(heuristics):
             #marginals = hf.predict_proba(X[:,feat_combos[i]])[:,1]
+            print(i)
             all_marginals = hf.predict_proba(X[:,feat_combos[i]])
             marginals = np.amax(all_marginals, axis=1)
             #idx = np.unravel_index(np.argmax(all_marginals, axis=1), all_marginals.shape)[1]
             idx = np.argmax(all_marginals, axis = 1)
             #labels_cutoff = np.zeros(np.shape(marginals))
+            if (i==4):
+                test = 1
             beta_opt.append((self.beta_optimizer(marginals, idx, ground)))
         return beta_opt
 

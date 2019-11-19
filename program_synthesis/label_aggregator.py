@@ -84,6 +84,7 @@ class LabelAggregator(object):
             X_single = np.zeros(np.shape(X))
             X_single[X != x_value] = -1
             X_single[X==x_value] = 1
+            X_single[X==0] = 0
             self.train(X_single, rate=rate, mu=mu, verbose=verbose)
             self.w_arr[x_value - 1] = self.w
             x_value += 1
@@ -190,7 +191,7 @@ class LabelAggregator(object):
             all_marginals[:, x_value - 1] = marginals
             x_value += 1
 
-        #marginals_normal = softmax(all_marginals, axis=1)
+        marginals_normal = softmax(all_marginals, axis=1)
         marginals_sum = np.sum(all_marginals, axis = 1)
         marginals_normal = all_marginals / marginals_sum[:, None]
         marginals_max = np.amax(marginals_normal, axis = 1)

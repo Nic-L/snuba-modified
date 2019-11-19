@@ -13,7 +13,7 @@ class HeuristicGenerator(object):
     """
 
     def __init__(self, train_primitive_matrix, val_primitive_matrix, 
-    val_ground, train_ground=None, b=0.5):
+    val_ground, train_ground=None, b=0.5, class_count =2):
         """ 
         Initialize HeuristicGenerator object
 
@@ -27,6 +27,7 @@ class HeuristicGenerator(object):
         self.val_ground = val_ground
         self.train_ground = train_ground
         self.b = b
+        self.class_count = class_count
 
         self.vf = None
         self.syn = None
@@ -109,24 +110,25 @@ class HeuristicGenerator(object):
         acc_cov_scores = np.zeros(np.shape(L_val)[1])
 
         for i in range(np.shape(L_val)[1]):
-            val_ground_filtered = self.val_ground[L_val[:, i] != 0]
+            '''val_ground_filtered = self.val_ground[L_val[:, i] != 0]
             L_val_filtered = L_val[:, i]
             L_val_filtered = L_val_filtered[L_val_filtered != 0]
 
-            prec_score = precision_score(self.val_ground, L_val[:, i], average='micro')
+            prec_score = precision_score(val_ground_filtered, L_val_filtered, average='micro')
             rec_score = recall_score(val_ground_filtered, L_val_filtered, average='micro')
 
             this_f1 = (2 * prec_score * rec_score) / (prec_score + rec_score)
             #acc_cov_scores[i] = f1_score(val_ground_filtered, L_val_filtered, average='micro')
-            acc_cov_scores[i] = this_f1
+            acc_cov_scores[i] = this_f1'''
 
-        #acc_cov_scores = [f1_score(self.val_ground, L_val[:,i], average='micro') for i in range(np.shape(L_val)[1])]
+        acc_cov_scores = [f1_score(self.val_ground, L_val[:,i], average='micro') for i in range(np.shape(L_val)[1])]
         acc_cov_scores = np.nan_to_num(acc_cov_scores)
 
         if self.vf != None:
             #Calculate Jaccard score for diversity
+            #dummy variablen um labels auf 0 und 1 runterzurechnen für einfache summierung
             Jaccard_dummy_vf = self.vf.L_train.T
-            Jaccard_dummy_vf[Jaccard_dummy != 0] = 1
+            Jaccard_dummy_vf[Jaccard_dummy_vf != 0] = 1
             Jaccard_dummy_train = L_train
             Jaccard_dummy_train[Jaccard_dummy_train != 0] = 1
             train_num_labeled = np.sum(np.abs(Jaccard_dummy_vf), axis=0)
@@ -191,8 +193,8 @@ class HeuristicGenerator(object):
         """
         ###THIS IS WHERE THE SNORKEL FLAG IS SET!!!!
         self.vf = Verifier(self.L_train, self.L_val, self.val_ground, has_snorkel=False)
-        self.vf.train_gen_model()
-        self.vf.assign_marginals()
+        self.vf.train_gen_model(class_count = self.class_count)
+        self.vf.assign_marginals(class_count = self.class_count)
 
     def gamma_optimizer(self,marginals):
         """ 
@@ -218,7 +220,6 @@ class HeuristicGenerator(object):
         vague_idx = self.vf.find_vague_points(b=self.b, gamma=gamma_opt)
         incorrect_idx = vague_idx
         self.feedback_idx = list(set(list(np.concatenate((vague_idx,incorrect_idx)))))
-        test = 1
 
 
     def evaluate(self):
